@@ -10,27 +10,27 @@ provider "oci" {
   region = "us-ashburn-1"
 }
 
-resource "oci_core_vcn" "MHVCN1" {
+resource "oci_core_vcn" "VCN1" {
   cidr_blocks                      = ["10.10.0.0/16"]
   is_ipv6enabled                   = "true"
   is_oracle_gua_allocation_enabled = "true"
-  display_name                     = "MHVCN1"
-  dns_label                        = "MHVCN1"
+  display_name                     = "VCN1"
+  dns_label                        = "VCN1"
   compartment_id                   = "ocid1.compartment.oc1..aaaaaaaa5qwf3ebzs2zhyhkd4linmzgnbdxve233m36xyzdfi2ae44utzira"
 }
 
 resource "oci_core_subnet" "pubsubnet" {
-  cidr_block                 = cidrsubnet(oci_core_vcn.MHVCN1.cidr_blocks[0],8,1)
-  ipv6cidr_block             = cidrsubnet(oci_core_vcn.MHVCN1.ipv6cidr_blocks[0], 8, 0)
+  cidr_block                 = cidrsubnet(oci_core_vcn.VCN1.cidr_blocks[0],8,1)
+  ipv6cidr_block             = cidrsubnet(oci_core_vcn.VCN1.ipv6cidr_blocks[0], 8, 0)
   compartment_id             = "ocid1.compartment.oc1..aaaaaaaa5qwf3ebzs2zhyhkd4linmzgnbdxve233m36xyzdfi2ae44utzira"
-  vcn_id                     = oci_core_vcn.MHVCN1.id
+  vcn_id                     = oci_core_vcn.VCN1.id
   prohibit_public_ip_on_vnic = "false"
   dns_label                  = "pubsubnet"
   display_name               = "pubsubnet"
 }
 
 output "IPv6" {
-  value = cidrsubnets(oci_core_vcn.MHVCN1.ipv6cidr_blocks[0], 8, 8)
+  value = cidrsubnets(oci_core_vcn.VCN1.ipv6cidr_blocks[0], 8, 8)
 }
 
 output "pubsubnet_cidrblock" {
