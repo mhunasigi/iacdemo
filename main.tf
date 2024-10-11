@@ -10,7 +10,7 @@ provider "oci" {
   region = "us-ashburn-1"
 }
 
-resource "oci_core_vcn" "MHVCN2" {
+resource "oci_core_vcn" "MHVCN1" {
   cidr_blocks                      = ["10.10.0.0/16"]
   is_ipv6enabled                   = "true"
   is_oracle_gua_allocation_enabled = "true"
